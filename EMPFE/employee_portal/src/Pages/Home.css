@@ -1,0 +1,221 @@
+.app-container {
+  display: flex;
+  width: 100dvw;
+  height: 100dvh;
+}
+
+.main-content {
+  margin-left: 250px;
+  margin-top: 10px;
+  padding: 20px;
+  flex: 1;
+  width: 100%;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0px 30px;
+  width: 100%;
+  background-color: #0c040d;
+  /* padding: 15px 50px; */
+  padding-right: 0px 10px;
+  /* color: white; */
+  height: 60px;
+  z-index: 1000;
+}
+
+.logo-c {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  font-size: 22px;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.icon {
+  font-size: 1.2rem;
+  /* or 16px/20px etc., whatever suits the layout */
+  min-width: 20px;
+  /* Optional: keeps alignment */
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.nav-item:hover {
+  color: #842988;
+  transform: scale(1.1);
+}
+
+.logout {
+  color: #842988;
+}
+
+.logout:hover {
+  color: #842988;
+}
+
+/* If sidebar is collapsed */
+.sidebar.collapsed+.main-content {
+  margin-left: 60px;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  /* background-color: #170719; */
+  color: #fff;
+  /* color: #000; */
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+  /* border: 1px dashed #888; */
+}
+
+.yellow {
+  text-decoration-color: #842988;
+  color: #842988;
+}
+
+.sidebar.collapsed {
+  width: 60px;
+}
+
+/* Sidebar List */
+.sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Sidebar Items */
+.sidebar-ele {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+  padding: 15px;
+  font-size: clamp(12px, 14px, 16px);
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  white-space: nowrap;
+  color: #fff;
+  /* Prevents text from wrapping */
+}
+
+.sidebar-ele:hover {
+  background-color: #842988;
+  transform: scale(1.05);
+}
+
+.icon {
+  font-size: 22px;
+  transition: transform 0.3s ease;
+}
+
+.collapse-btn {
+  background: none;
+  border: none;
+  /* color: #fff; */
+  padding: 10px;
+  cursor: pointer;
+  text-align: right;
+  margin-left: auto;
+  margin-right: 10px;
+  font-size: 18px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.collapse-btn:hover {
+  background-color: #842988;
+}
+
+/* Rotate Arrow when Collapsed */
+.rotate {
+  transform: rotate(180deg);
+}
+
+/* Hide text when sidebar is collapsed */
+.sidebar.collapsed .sidebar-ele span {
+  display: none;
+}
+
+/* Center icons in collapsed mode */
+.sidebar.collapsed .sidebar-ele {
+  justify-content: center;
+  padding: 15px 0;
+}
+
+.icon {
+  color: #666;
+}
+
+.ele {
+  color: #666;
+  font-family: "Open Sans", sans-serif;
+}
+
+.toggle-icon {
+  font-size: 22px;
+  color: #842988;
+  /* or #333 if you want a darker neutral */
+  transition: transform 0.3s ease;
+}
+
+/* Make Sidebar Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px;
+    position: fixed;
+    z-index: 100;
+    height: 100vh;
+    top: 60px;
+    left: 0;
+  }
+
+  .sidebar.open {
+    width: 250px;
+  }
+
+  .collapse-btn {
+    position: absolute;
+    top: 10px;
+    right: -30px;
+    background-color: transparent;
+  }
+}

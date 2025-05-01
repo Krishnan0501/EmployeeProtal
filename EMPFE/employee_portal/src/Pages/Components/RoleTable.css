@@ -1,0 +1,18 @@
+/* Zebra striping for body rows */
+.MuiTableBody-root .MuiTableRow-root:nth-child(even) {
+    background-color: #ffffff !important;
+    color: white;
+    /* Optional for better contrast */
+}
+/* Zebra striping for body rows */
+.MuiTableBody-root .MuiTableRow-root:nth-child(odd) {
+    background-color: #dfe4ea !important;
+    color: white;
+    /* Optional for better contrast */
+}
+
+/* Optional: Hover effect */
+.MuiTableBody-root .MuiTableRow-root:hover {
+    background-color: #bdc3c7 !important;
+    cursor: pointer;
+}
