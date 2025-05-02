@@ -7,6 +7,8 @@ import { Login } from "./Pages/Login";
 import AddRole from "./Pages/Components/Addrole";
 import EditRole from "./Pages/Components/EditRole";
 import { ChangePassword } from "./Pages/ChangePassword";
+import Profile from "./Pages/Components/Profile"; // Fixed import (capital P and no curly braces)
+import EditProfile from "./Pages/Components/EditProfile";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -16,32 +18,35 @@ function App() {
       setIsLoggedIn(true);
     }
   }, []);
+  
   const [activeSection, setActiveSection] = useState("DASHBOARD");
   useEffect(() => {
     const Data = JSON.parse(sessionStorage.getItem("EmployeeData"));
-    // console.log("Data----------", Data);
-
     if (Data && Data.roleId !== 3) {
       setActiveSection("TIMESHEET ENTRY");
-      // console.log("activeSection", activeSection);
     }
   }, [isLoggedIn]);
+  
   const [credintial, setCredintial] = useState({
     emailId: "",
     password: "",
   });
+  
   const [employeeData, setEmployeeData] = useState(null);
+  
   const handleLoginSuccess = () => setIsLoggedIn(true);
   const handleLogout = () => {
     setIsLoggedIn(false);
     sessionStorage.removeItem("token");
   };
+  
   useEffect(() => {
     const employeeData = JSON.parse(sessionStorage.getItem("EmployeeData"));
     const entityId = employeeData?.entityId;
     const entityName = entityId === 1 ? "B-SEC" : "IAGAMI";
     document.title = `Employee | ${entityName}`;
   }, []);
+
   return (
     <Router>
       <Routes>
@@ -52,6 +57,7 @@ function App() {
               path="/"
               element={
                 <Login
+                  employeeData={employeeData}
                   setEmployeeData={setEmployeeData}
                   onLoginSuccess={handleLoginSuccess}
                   credintial={credintial}
@@ -88,7 +94,6 @@ function App() {
   );
 }
 
-// ✅ Optimized Layout Component
 function AppLayout({
   activeSection,
   setActiveSection,
@@ -103,7 +108,6 @@ function AppLayout({
           activeSection={activeSection}
           setActiveSection={setActiveSection}
         />
-        {/* Match all authenticated routes */}
         <Routes>
           <Route
             path="/"
@@ -116,6 +120,12 @@ function AppLayout({
           />
           <Route path="/roles/add" element={<AddRole />} />
           <Route path="/roles/:operation/:roleId" element={<EditRole />} />
+          <Route path="/profile" element={<Profile employeeData={employeeData} />} />
+          <Route
+  path="/EditProfile"
+  element={<EditProfile employeeData={employeeData} />}
+/>
+
         </Routes>
       </div>
     </>

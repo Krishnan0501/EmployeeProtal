@@ -56,13 +56,7 @@ export const MainContent = ({ activeSection, employeeData }) => {
         Current: {activeSection}
       </div>
 
-      {/* Static sections */}
-      {/* {activeSection === "EmployeeRoles" && <Table2 />}
-      {activeSection === "Departments" && <TablePage />}
-      {activeSection === "EmployeeDesigination" && (
-        <p>Manage employee designations.</p>
-      )} */}
-
+      
       {/* Dynamic sections */}
       {Object.entries(screenComponentMap).map(([screenType, config]) => {
         const shouldRender =

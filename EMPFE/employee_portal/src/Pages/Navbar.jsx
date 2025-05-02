@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   FaRegFileAlt,
   FaQuestionCircle,
@@ -11,6 +13,9 @@ import "./Home.css"; // Assuming Home.css contains navbar styles
 
 export const Navbar = ({ onLogout }) => {
   const emp = JSON.parse(sessionStorage.getItem("EmployeeData"));
+  
+  const navigate = useNavigate(); // ✅ add this line
+
   return (
     <div className="navbar">
       {/* Logo and Title */}
@@ -25,13 +30,13 @@ export const Navbar = ({ onLogout }) => {
 
       {/* Navigation Icons */}
       <ul className="nav-links">
-        <li className="nav-item" title="Files">
+        {/* <li className="nav-item" title="Files">
           <FaRegFileAlt className="icon" />
         </li>
         <li className="nav-item" title="Help">
           <FaQuestionCircle className="icon" />
-        </li>
-        <li className="nav-item" title="Profile">
+        </li> */}
+        <li className="nav-item" title="Profile" onClick={() => navigate("/profile")}>
           <FaUser className="icon" />
         </li>
         <li className="nav-item logout" title="Logout" onClick={onLogout}>
