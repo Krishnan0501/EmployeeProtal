@@ -48,6 +48,20 @@ export const getTech = async (id) => {
     return null;
   }
 };
+export const getEmployeeProfile = async (id) => {
+  try {
+    const response = await axios.get(
+      `${TIMESHEET_URI}/profile/${id}`,
+      {
+        headers: getAuthHeader(),
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching employee profile:", error);
+    return null;
+  }
+};
 
 export const getTaskupdates = async (id) => {
   try {

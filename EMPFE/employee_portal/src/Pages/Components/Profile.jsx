@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Typography,
@@ -22,7 +22,6 @@ import {
   LocationOn,
   SupervisorAccount,
   Email,
-  Phone,
   PhoneIphone,
   PhoneAndroid,
   PhoneCallback,
@@ -30,38 +29,60 @@ import {
   ContentCopy,
   Edit
 } from '@mui/icons-material';
-
+import { getEmployeeProfile } from "../../Pages/api.js";
 import { useNavigate } from "react-router-dom";
 
-const EmployeeProfile = () => {
-    
-      const navigate = useNavigate(); // ✅ add this line
-  const employee = {
-    name: "Sarah Johnson",
-    title: "Senior Product Designer • Design Department",
-    employeeId: "EMP-2023-0042",
-    currentProject: "Product X Redesign",
-    address: "123 Main Street, San Francisco, CA 94105",
-    reportsTo: "Michael Chen, Design Director",
-    employmentType: "Full-Time",
-    skills: ["UI/UX Design", "Design Systems", "Figma", "Front-end Development"],
-    contact: {
-      email: "sarah.johnson@company.com",
-      phone: "(415) 555-2671",
-      mobile: "(415) 555-2672",
-      workPhone: "(415) 555-2673"
+export const EmployeeProfile = () => {
+  const employeeData = JSON.parse(sessionStorage.getItem("EmployeeData"));
+  console.log("Employee Data:", employeeData); // Log the employee data for debugging
+  const userId = employeeData.employeeId;
+  console.log("User ID:", userId); // Log the userId for debugging
+ // Log the userId for debugging
+
+  const navigate = useNavigate(); // ✅ add this line
+
+  const [employee, setEmployee] = useState(null); // State to hold employee data
+  const [loading, setLoading] = useState(true); // State for loading
+
+  const fetchEmployeeProfile = async (id) => {
+    try {
+      const data = await getEmployeeProfile(id);
+      setEmployee(data); 
+      setLoading(false); // Stop loading once data is fetched
+    } catch (error) {
+      console.error("Error fetching employee profile", error);
+      setLoading(false); // Stop loading in case of error
     }
   };
+  useEffect(() => {
+console.log("Employee data:", employee); // Log the employee data for debugging
+  },[employee]); // Log the employee data for debugging
+
+  // Fetch the profile data when the component mounts or userId changes
+  useEffect(() => {
+    if (userId) {
+      fetchEmployeeProfile(userId);
+    }
+  }, [userId]);
 
   const handleEdit = () => {
-    // Add your edit functionality here
-    navigate("/EditProfile"); // Navigate to the edit profile page
+    // Navigate to the edit profile page
+    navigate("/EditProfile");
     console.log("Edit button clicked");
-    // You would typically open a modal or form for editing here
   };
 
+  // Render a loading indicator if data is being fetched
+  if (loading) {
+    return <Typography>Loading...</Typography>;
+  }
+
+  // Render a message if no employee data is available
+  if (!employee) {
+    return <Typography>No employee data found.</Typography>;
+  }
+
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 , maxHeight: '70vh', overflowY: 'auto'}}>
+    <Container maxWidth="lg" sx={{ mt: 4, maxHeight: '70vh', overflowY: 'auto' }}>
       <Paper elevation={3} sx={{
         borderRadius: 3,
         mt: 5,
@@ -107,7 +128,7 @@ const EmployeeProfile = () => {
               bgcolor: 'primary.main',
               fontSize: '2rem'
             }}>
-              SJ
+              {employee.name.charAt(0)} {/* Use first character of the name */}
             </Avatar>
             <Box>
               <Typography variant="h4" component="h1" fontWeight={600}>
@@ -124,8 +145,8 @@ const EmployeeProfile = () => {
           <Grid container spacing={4}>
             {/* Left Column - Employee Information */}
             <Grid item xs={12} md={6}>
-              <Paper elevation={0} sx={{ 
-                p: 3, 
+              <Paper elevation={0} sx={{
+                p: 3,
                 height: '100%',
                 border: '1px solid',
                 borderColor: 'divider',
@@ -135,7 +156,7 @@ const EmployeeProfile = () => {
                 <Typography variant="h6" component="h2" gutterBottom fontWeight={600} sx={{ mb: 2 }}>
                   Profile Details
                 </Typography>
-                
+
                 <List dense disablePadding>
                   <InfoItem icon={<Badge />} label="Employee ID" value={employee.employeeId} />
                   <InfoItem icon={<Work />} label="Current Project" value={employee.currentProject} />
@@ -150,7 +171,7 @@ const EmployeeProfile = () => {
             <Grid item xs={12} md={6}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 {/* Skills Box */}
-                <Paper elevation={0} sx={{ 
+                <Paper elevation={0} sx={{
                   p: 3,
                   border: '1px solid',
                   borderColor: 'divider',
@@ -165,10 +186,10 @@ const EmployeeProfile = () => {
                       <Chip
                         key={index}
                         label={skill}
-                        icon={index === 3 ? <Code /> : undefined}
+                        icon={index === 5 ? <Code /> : undefined}
                         color={index % 2 ? 'primary' : 'default'}
                         variant="outlined"
-                        sx={{ 
+                        sx={{
                           borderRadius: 1,
                           fontWeight: index < 3 ? 600 : 400
                         }}
@@ -178,7 +199,7 @@ const EmployeeProfile = () => {
                 </Paper>
 
                 {/* Contact Box */}
-                <Paper elevation={0} sx={{ 
+                <Paper elevation={0} sx={{
                   p: 3,
                   border: '1px solid',
                   borderColor: 'divider',
@@ -189,23 +210,23 @@ const EmployeeProfile = () => {
                     Contact Information
                   </Typography>
                   <List dense disablePadding>
-                    <ContactItem 
-                      icon={<Email />} 
-                      label="Email" 
-                      value={employee.contact.email} 
-                      type="email" 
+                    <ContactItem
+                      icon={<Email />}
+                      label="Email"
+                      value={employee.contact.email}
+                      type="email"
                     />
-                    <ContactItem 
-                      icon={<PhoneIphone />} 
-                      label="Mobile" 
-                      value={employee.contact.mobile} 
-                      type="mobile" 
+                    <ContactItem
+                      icon={<PhoneIphone />}
+                      label="Mobile"
+                      value={employee.contact.mobile}
+                      type="mobile"
                     />
-                    <ContactItem 
-                      icon={<PhoneAndroid />} 
-                      label="Alternate Mobile" 
-                      value={employee.contact.workPhone} 
-                      type="work" 
+                    <ContactItem
+                      icon={<PhoneAndroid />}
+                      label="Alternate Mobile"
+                      value={employee.contact.workPhone}
+                      type="work"
                     />
                   </List>
                 </Paper>
@@ -282,5 +303,3 @@ const InfoItem = ({ icon, label, value }) => (
     />
   </ListItem>
 );
-
-export default EmployeeProfile;

@@ -937,6 +937,14 @@ public class employeeController {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiResponse);
 	    }
 	}
+	
+	@GetMapping("/employee/profile/{id}")
+	
+	public void getEmployeeProfileDeatils(@PathVariable Integer userId) {
+		
+		
+		
+	}
 
 
 }

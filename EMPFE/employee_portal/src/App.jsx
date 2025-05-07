@@ -7,8 +7,9 @@ import { Login } from "./Pages/Login";
 import AddRole from "./Pages/Components/Addrole";
 import EditRole from "./Pages/Components/EditRole";
 import { ChangePassword } from "./Pages/ChangePassword";
-import Profile from "./Pages/Components/Profile"; // Fixed import (capital P and no curly braces)
+// import {EmployeeProfile} from "./Pages/Components/Profile"; // Fixed import (capital P and no curly braces)
 import EditProfile from "./Pages/Components/EditProfile";
+import { EmployeeProfile } from "./Pages/Components/Profile";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -120,7 +121,7 @@ function AppLayout({
           />
           <Route path="/roles/add" element={<AddRole />} />
           <Route path="/roles/:operation/:roleId" element={<EditRole />} />
-          <Route path="/profile" element={<Profile employeeData={employeeData} />} />
+          <Route path="/profile" element={<EmployeeProfile/>} />
           <Route
   path="/EditProfile"
   element={<EditProfile employeeData={employeeData} />}
